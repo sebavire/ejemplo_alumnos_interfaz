@@ -6,11 +6,19 @@ package Presentacion;
 
 import Dominio.Alumno;
 import Dominio.principal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class formularioAlumnos extends javax.swing.JFrame {
 
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    
+    Date date = new Date();
+    
+    String fecha = sdf.format(date);
+    
     principal principal;
   
     public formularioAlumnos(principal principal) {
