@@ -35,7 +35,12 @@ public class Alumno {
         this.telefono = telefono;
     }
 
-   
+    @Override
+    public String toString() {
+        return "Nombre: " + nombre + " - cedula: " + cedula;
+    }
+
+    
     
     
     
