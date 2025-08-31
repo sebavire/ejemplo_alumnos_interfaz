@@ -14,31 +14,31 @@ import javax.swing.table.DefaultTableModel;
 public class formularioAlumnos extends javax.swing.JFrame {
 
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    
+
     Date date = new Date();
-    
+
     String fecha = sdf.format(date);
-    
+
     principal principal;
-  
+
     public formularioAlumnos(principal principal) {
         this.principal = principal;
         initComponents();
         actualizarTabla();
     }
 
-    private void actualizarTabla(){
+    private void actualizarTabla() {
         //borra el contenido de la tabla:
         DefaultTableModel model = (DefaultTableModel) tablaAlumnos.getModel();
         model.setRowCount(0);
 
         //llena la tabla con los datos actualziados:
         for (Alumno alumno : principal.mostrarAlumnos()) {
-            model.addRow(new Object[]{alumno.getNombre(), 
+            model.addRow(new Object[]{alumno.getNombre(),
                 alumno.getCedula(), alumno.getTelefono()});
         }
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -60,6 +60,7 @@ public class formularioAlumnos extends javax.swing.JFrame {
         botonAceptar = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         tablaAlumnos = new javax.swing.JTable();
+        botonEliminar = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -105,6 +106,13 @@ public class formularioAlumnos extends javax.swing.JFrame {
         ));
         jScrollPane3.setViewportView(tablaAlumnos);
 
+        botonEliminar.setText("Eliminar");
+        botonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonEliminarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -113,46 +121,51 @@ public class formularioAlumnos extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(botonAceptar)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel4)
-                                .addComponent(jLabel1)
-                                .addComponent(jLabel2))
-                            .addGap(18, 18, 18)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(campoNombre)
-                                .addComponent(campoCedula)
-                                .addComponent(campoTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(botonAceptar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(botonEliminar))
+                            .addComponent(campoNombre)
+                            .addComponent(campoCedula)
+                            .addComponent(campoTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(jLabel3)
-                .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(campoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(campoCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(campoTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(18, 18, 18)
-                .addComponent(botonAceptar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(19, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addComponent(jLabel3)
+                        .addGap(36, 36, 36)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(campoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(campoCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(campoTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(botonAceptar)
+                            .addComponent(botonEliminar)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -162,27 +175,44 @@ public class formularioAlumnos extends javax.swing.JFrame {
         String nombre = campoNombre.getText();
         String cedula = campoCedula.getText();
         String telefono = campoTelefono.getText();
-        
+
         //Se crea un nuevo alumno:
         Alumno nuevoAlumno = new Alumno(nombre, cedula, telefono);
         //Se agrega al ArrayList de alumnos:
         this.principal.agregarAlumno(nuevoAlumno);
-        
+
         //Se muestra un mensaje:
         JOptionPane.showMessageDialog(this,
-                    "Alumno ingresado correctamente",
-                    "Nuevo Alumno",
-                    JOptionPane.INFORMATION_MESSAGE);
-        
+                "Alumno ingresado correctamente",
+                "Nuevo Alumno",
+                JOptionPane.INFORMATION_MESSAGE);
+
         actualizarTabla();
         this.campoNombre.setText("");
         this.campoCedula.setText("");
         this.campoTelefono.setText("");
     }//GEN-LAST:event_botonAceptarActionPerformed
 
+    private void botonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarActionPerformed
+        int fila = this.tablaAlumnos.getSelectedRow();
+
+        int opcion = JOptionPane.showConfirmDialog(this,
+                "¿Seguro desea eliminar el elemento?",
+                "Eliminar Usuario",
+                JOptionPane.YES_NO_OPTION);
+
+        if (opcion == JOptionPane.YES_OPTION) {
+            //Se elimina el elemento:
+            this.principal.eliminarAlumno(fila);
+            actualizarTabla();
+        }
+
+    }//GEN-LAST:event_botonEliminarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAceptar;
+    private javax.swing.JButton botonEliminar;
     private javax.swing.JTextField campoCedula;
     private javax.swing.JTextField campoNombre;
     private javax.swing.JTextField campoTelefono;

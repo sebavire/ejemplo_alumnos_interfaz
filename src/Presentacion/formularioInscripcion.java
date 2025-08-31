@@ -7,6 +7,7 @@ package Presentacion;
 import Dominio.Alumno;
 import Dominio.Inscripcion;
 import Dominio.principal;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -22,6 +23,7 @@ public class formularioInscripcion extends javax.swing.JFrame {
         initComponents();
         // Se llama al método para llenar el combo:
         llenarComboAlumnos();
+        actualizarTabla();
     }
     
     // Método para llenar el combo con datos:
@@ -32,6 +34,18 @@ public class formularioInscripcion extends javax.swing.JFrame {
         // y se colocan en el combobox:
         for(Alumno a : this.principal.mostrarAlumnos()){
             this.comboAlumnos.addItem(a.toString());
+        }
+    }
+    
+    private void actualizarTabla(){
+        //borra el contenido de la tabla:
+        DefaultTableModel model = (DefaultTableModel) tablaInscripciones.getModel();
+        model.setRowCount(0);
+
+        //llena la tabla con los datos actualziados:
+        for (Inscripcion i : principal.mostrarInscripciones()) {
+            model.addRow(new Object[]{i.getAlumno().getNombre(), 
+                i.getCurso()});
         }
     }
 
@@ -50,6 +64,8 @@ public class formularioInscripcion extends javax.swing.JFrame {
         botonAceptar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         campoCurso = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaInscripciones = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -75,6 +91,19 @@ public class formularioInscripcion extends javax.swing.JFrame {
             }
         });
 
+        tablaInscripciones.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Alumno", "Curso"
+            }
+        ));
+        jScrollPane1.setViewportView(tablaInscripciones);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -96,24 +125,31 @@ public class formularioInscripcion extends javax.swing.JFrame {
                                 .addComponent(comboAlumnos, 0, 255, Short.MAX_VALUE)
                                 .addComponent(campoCurso))))
                     .addComponent(jLabel3))
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(jLabel3)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(campoCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(comboAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(43, 43, 43)
-                .addComponent(botonAceptar)
-                .addContainerGap(114, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(campoCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(comboAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(43, 43, 43)
+                        .addComponent(botonAceptar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(49, 49, 49)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
 
         pack();
@@ -149,5 +185,7 @@ public class formularioInscripcion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tablaInscripciones;
     // End of variables declaration//GEN-END:variables
 }
