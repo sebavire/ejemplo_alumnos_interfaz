@@ -1,11 +1,13 @@
 package ejemplo_alumnos;
 
 import Dominio.principal;
-import Presentacion.formularioAlumnos;
+import Presentacion.*;
 import Presentacion.formularioInscripcion;
 import javax.swing.UIManager;
 
 public class Ejemplo_alumnos {
+    
+    
 
     public static void main(String[] args) {
         try {
@@ -15,11 +17,15 @@ public class Ejemplo_alumnos {
         }
 
         principal principal = new principal();
-        formularioAlumnos form = new formularioAlumnos(principal);
+        //formularioAlumnos form = new formularioAlumnos(principal);
         //form.setVisible(true);
         
-        formularioInscripcion formInscripcion = new formularioInscripcion(principal);
-        formInscripcion.setVisible(true);
+        //formularioInscripcion formInscripcion = new formularioInscripcion(principal);
+        //formInscripcion.setVisible(true);
+        
+        formularioPrincipal form = new formularioPrincipal(principal);
+        form.setLocationRelativeTo(null);
+        form.setVisible(true);
 
         /*try {
 
