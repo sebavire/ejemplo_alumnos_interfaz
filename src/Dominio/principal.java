@@ -29,8 +29,14 @@ public class principal {
         alumnos.add(unAlumno);
         unAlumno = new Alumno("Pedro", "456456-8", "09888888");
         alumnos.add(unAlumno);
-        unAlumno = new Alumno("Varela", "987654-1", "09777777");
-        alumnos.add(unAlumno);
+        Alumno otroAlumno = new Alumno("Varela", "987654-1", "09777777");
+        alumnos.add(otroAlumno);
+        
+        Inscripcion unaInscripcion = new Inscripcion("Programación", unAlumno);
+        inscripciones.add(unaInscripcion);
+        unaInscripcion = new Inscripcion("Lógica", otroAlumno);
+        inscripciones.add(unaInscripcion);
+        
     }
     
     public void agregarAlumno(Alumno a) {
@@ -49,6 +55,23 @@ public class principal {
         return inscripciones;
     }
     
+    public void modificarInscripcion(int posicion, Inscripcion i){
+        // Se establece el alumno modificado
+        // en la posición seleccionada:
+        inscripciones.set(posicion, i);
+    }
     
+    public void eliminarInscripcion(int posicion){
+        inscripciones.remove(posicion);
+    }
+    
+    public int posicionAlumno(Alumno a){
+        for (int i = 0; i < 10; i++) {
+            if(a == this.alumnos.get(i)){
+                return i;
+            }
+        }
+        return 0;
+    }
     
 }

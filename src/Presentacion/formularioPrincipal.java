@@ -5,6 +5,7 @@
 package Presentacion;
 
 import Dominio.principal;
+import javax.swing.JFrame;
 
 
 
@@ -34,6 +35,7 @@ public class formularioPrincipal extends javax.swing.JFrame {
         botonInscripciones = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         botonAlumnos.setText("Alumnos");
         botonAlumnos.addActionListener(new java.awt.event.ActionListener() {
@@ -58,7 +60,7 @@ public class formularioPrincipal extends javax.swing.JFrame {
                 .addComponent(botonAlumnos)
                 .addGap(18, 18, 18)
                 .addComponent(botonInscripciones)
-                .addContainerGap(143, Short.MAX_VALUE))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -67,7 +69,7 @@ public class formularioPrincipal extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonAlumnos)
                     .addComponent(botonInscripciones))
-                .addContainerGap(205, Short.MAX_VALUE))
+                .addContainerGap(96, Short.MAX_VALUE))
         );
 
         pack();
@@ -75,12 +77,14 @@ public class formularioPrincipal extends javax.swing.JFrame {
 
     private void botonAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAlumnosActionPerformed
         formularioAlumnos form = new formularioAlumnos(principal);
+        form.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         form.setLocationRelativeTo(null);
         form.setVisible(true);
     }//GEN-LAST:event_botonAlumnosActionPerformed
 
     private void botonInscripcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonInscripcionesActionPerformed
         formularioInscripcion form = new formularioInscripcion(principal);
+        form.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         form.setLocationRelativeTo(null);
         form.setVisible(true);
     }//GEN-LAST:event_botonInscripcionesActionPerformed

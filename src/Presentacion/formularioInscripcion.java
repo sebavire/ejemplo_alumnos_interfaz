@@ -7,6 +7,7 @@ package Presentacion;
 import Dominio.Alumno;
 import Dominio.Inscripcion;
 import Dominio.principal;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -66,8 +67,11 @@ public class formularioInscripcion extends javax.swing.JFrame {
         campoCurso = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaInscripciones = new javax.swing.JTable();
+        botonEliminar = new javax.swing.JButton();
+        botonModificar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setText("Inscripción");
@@ -102,7 +106,28 @@ public class formularioInscripcion extends javax.swing.JFrame {
                 "Alumno", "Curso"
             }
         ));
+        tablaInscripciones.getTableHeader().setResizingAllowed(false);
+        tablaInscripciones.getTableHeader().setReorderingAllowed(false);
+        tablaInscripciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaInscripcionesMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tablaInscripciones);
+
+        botonEliminar.setText("Eliminar");
+        botonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonEliminarActionPerformed(evt);
+            }
+        });
+
+        botonModificar.setText("Modificar");
+        botonModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonModificarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -111,20 +136,25 @@ public class formularioInscripcion extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(botonAceptar)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(jLabel2)
-                                    .addGap(18, 18, 18))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(jLabel1)
-                                    .addGap(30, 30, 30)))
+                    .addComponent(jLabel3)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(30, 30, 30)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(botonAceptar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(botonEliminar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(botonModificar))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(comboAlumnos, 0, 255, Short.MAX_VALUE)
-                                .addComponent(campoCurso))))
-                    .addComponent(jLabel3))
+                                .addComponent(campoCurso)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -144,8 +174,11 @@ public class formularioInscripcion extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(comboAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(43, 43, 43)
-                        .addComponent(botonAceptar))
+                        .addGap(51, 51, 51)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(botonAceptar)
+                            .addComponent(botonEliminar)
+                            .addComponent(botonModificar)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(49, 49, 49)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -169,17 +202,60 @@ public class formularioInscripcion extends javax.swing.JFrame {
         //Crear la inscripción vinvulándola con el alumno:
         String curso = this.campoCurso.getText();
         Inscripcion nuevaInscripcion = new Inscripcion(curso, seleccionado);
+        
+        this.principal.agregarInscripcion(nuevaInscripcion);
+        
+        //Se muestra un mensaje:
+        JOptionPane.showMessageDialog(this,
+                "Inscripción ingresada correctamente",
+                "Nueva Inscripción",
+                JOptionPane.INFORMATION_MESSAGE);
 
-        System.out.println("Inscripcion creada:");
-        System.out.println(nuevaInscripcion.toString());
+        actualizarTabla();
+
+        this.campoCurso.setText("");
+        this.comboAlumnos.setSelectedIndex(0);
     }//GEN-LAST:event_botonAceptarActionPerformed
 
     private void campoCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoCursoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoCursoActionPerformed
 
+    private void botonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonEliminarActionPerformed
+
+    private void botonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonModificarActionPerformed
+
+    private void tablaInscripcionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaInscripcionesMouseClicked
+        int fila = this.tablaInscripciones.getSelectedRow();    
+        this.campoCurso.setText(tablaInscripciones.getValueAt(fila, 1).toString());
+        
+        Inscripcion seleccionada = this.principal.mostrarInscripciones().get(fila);
+        Alumno alumnoInscripto = seleccionada.getAlumno();
+        int posicionAlumno = this.principal.posicionAlumno(alumnoInscripto);
+        this.comboAlumnos.setSelectedIndex(posicionAlumno);
+    }//GEN-LAST:event_tablaInscripcionesMouseClicked
+
+    /*private void seleccionarAlumnoEnCombo(int posicion) {
+        // Busca la posicion de un alumno en la lista por Id:
+        int posicion = 0;
+        for (int i = 0; i < this.principal.listarUsuarios().size(); i++) {
+            if(this.principal.listarUsuarios().get(i).getId() == id){
+                posicion = i;
+                break;
+            }
+        }
+        // Selecciona el usuario en la posición:
+        this.comboUsuarios.setSelectedIndex(posicion);
+    }*/
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAceptar;
+    private javax.swing.JButton botonEliminar;
+    private javax.swing.JButton botonModificar;
     private javax.swing.JTextField campoCurso;
     private javax.swing.JComboBox<String> comboAlumnos;
     private javax.swing.JLabel jLabel1;

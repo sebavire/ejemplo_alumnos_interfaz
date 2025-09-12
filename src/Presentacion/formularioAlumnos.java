@@ -77,6 +77,7 @@ public class formularioAlumnos extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jLabel1.setText("Nombre:");
 
@@ -105,6 +106,8 @@ public class formularioAlumnos extends javax.swing.JFrame {
                 "Nombre", "Cedula", "Telefono"
             }
         ));
+        tablaAlumnos.getTableHeader().setResizingAllowed(false);
+        tablaAlumnos.getTableHeader().setReorderingAllowed(false);
         tablaAlumnos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tablaAlumnosMouseClicked(evt);
