@@ -66,7 +66,7 @@ public class principal {
     }
     
     public int posicionAlumno(Alumno a){
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < this.alumnos.size(); i++) {
             if(a == this.alumnos.get(i)){
                 return i;
             }
