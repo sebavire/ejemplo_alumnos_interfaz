@@ -62,6 +62,8 @@ public class formularioAlumnos extends javax.swing.JFrame {
         tablaAlumnos = new javax.swing.JTable();
         botonEliminar = new javax.swing.JButton();
         botonModificar = new javax.swing.JButton();
+        campoBuscar = new javax.swing.JTextField();
+        botonBuscar = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -129,6 +131,13 @@ public class formularioAlumnos extends javax.swing.JFrame {
             }
         });
 
+        botonBuscar.setText("Buscar por Nombre");
+        botonBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonBuscarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -155,8 +164,14 @@ public class formularioAlumnos extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(botonModificar)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(campoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botonBuscar)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -165,7 +180,16 @@ public class formularioAlumnos extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(41, 41, 41)
                         .addComponent(jLabel3)
-                        .addGap(36, 36, 36)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(campoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botonBuscar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(52, 52, 52)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
                             .addComponent(campoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -182,10 +206,8 @@ public class formularioAlumnos extends javax.swing.JFrame {
                             .addComponent(botonAceptar)
                             .addComponent(botonEliminar)
                             .addComponent(botonModificar)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(15, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(22, 22, 22))
         );
 
         pack();
@@ -195,6 +217,18 @@ public class formularioAlumnos extends javax.swing.JFrame {
         String nombre = campoNombre.getText();
         String cedula = campoCedula.getText();
         String telefono = campoTelefono.getText();
+        
+        // Se comprueba que el campo no esté vacío:
+        if(!nombre.equals("")){
+            //Acá va el código de ingreso del Objeto.
+            
+        }else{
+            //Se muestra un mensaje:
+        JOptionPane.showMessageDialog(this,
+                "Debe ingresar el nombre del Alumno.",
+                "Advertencia",
+                JOptionPane.WARNING_MESSAGE);
+        }
 
         //Se crea un nuevo alumno:
         Alumno nuevoAlumno = new Alumno(nombre, cedula, telefono);
@@ -211,6 +245,7 @@ public class formularioAlumnos extends javax.swing.JFrame {
         this.campoNombre.setText("");
         this.campoCedula.setText("");
         this.campoTelefono.setText("");
+       
     }//GEN-LAST:event_botonAceptarActionPerformed
 
     private void botonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarActionPerformed
@@ -272,11 +307,31 @@ public class formularioAlumnos extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_botonModificarActionPerformed
 
+    private void botonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarActionPerformed
+        //borra el contenido de la tabla:
+        DefaultTableModel model = (DefaultTableModel) tablaAlumnos.getModel();
+        model.setRowCount(0);
+        String buscar = this.campoBuscar.getText();
+
+        //llena la tabla con los datos actualziados:
+        for (Alumno alumno : principal.mostrarAlumnos()) {
+            // Comprueba que el nombre coincida
+            // Se usa toLowerCase para pasar todo a minúscula
+            if(alumno.getNombre().toLowerCase().contains(buscar)){
+                
+                model.addRow(new Object[]{alumno.getNombre(),
+                alumno.getCedula(), alumno.getTelefono()});
+            }
+        }
+    }//GEN-LAST:event_botonBuscarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAceptar;
+    private javax.swing.JButton botonBuscar;
     private javax.swing.JButton botonEliminar;
     private javax.swing.JButton botonModificar;
+    private javax.swing.JTextField campoBuscar;
     private javax.swing.JTextField campoCedula;
     private javax.swing.JTextField campoNombre;
     private javax.swing.JTextField campoTelefono;
